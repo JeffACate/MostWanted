@@ -17,9 +17,13 @@ function app(people){
       searchResults = searchByTraits(traits,people);
       break;
       default:
-    app(people); // restart app
+      app(people); // restart app
       break;
   }
+  mainMenu(searchResults, people);
+}
+// Call the mainMenu function ONLY after you find the SINGLE person you are looking for
+
   function getTraits(){
     let traits = [];
     let done = false;
@@ -43,32 +47,95 @@ function app(people){
     let occupation;
     let eye;
 
-    for(i = 0; i < traits.length; i++){
-      switch (traits[i]){
-        case 'gender':
-          gender = traits[i];
-          break;
-        case 'eye':
-          eye = trait[i];
-
-      }
-      
-    }
-
-
-
-
-
+    let choosenTraits = [];
+    let traitDetails = [];
     for(let i = 0; i < traits.length; i++){
-
-
+      switch(traits[i]){
+        case 'gender':
+          gender = promptFor("What is the gender? (male/female)", chars);
+          choosenTraits.push("gender");
+          traitDetails.push(gender);
+          break;
+        case 'height':
+          height = promptFor("What is the height in inches?", chars);
+          choosenTraits.push("height");
+          traitDetails.push(height);
+          break;
+        case 'weight':
+          weight = promptFor("What is the weight in lbs?", chars);
+          choosenTraits.push("weight");
+          traitDetails.push(weight);
+          break;
+        case 'occupation':
+          occupation = promptFor("What is the occupation?", chars);
+          choosenTraits.push("occupation");
+          traitDetails.push(occupation);
+          break;
+        case 'eye color':
+          eye = promptFor("What is the eye color?", chars)
+          choosenTraits.push("eye");
+          traitDetails.push(eye);
+          break;
+        default:
+          prompt("Not a valid trait");
+          break;
+      }
     }
+    let peopleSearched = [];
 
+    let peopleFound = people.filter(function(person){
+      for(let i = 0; i < choosenTraits.length; i++){
+        let hasGender = true;
+        let hasHeight = true;
+        let hasWeight = true;
+        let hasJob = true;
+        let hasEye = true;
+          switch(choosenTraits[i]){
+            case 'gender':
+              if(person.gender === traitDetails[i]){
+                 hasGender = true;
+              }
+              else{
+                 hasGender = false;
+              }
+            case 'height':
+              if(person.height === traitDetails[i]){
+                 hasHeight = true;
+              }
+              else{
+                 hasHeight = false;
+              }
+            case 'weight':
+              if(person.weight === traitDetails[i]){
+                 hasWeight = true;
+              }
+              else{
+                 hasWeight = false;
+              }
+            case 'occupation':
+              if(person.occupation === traitDetails[i]){
+                 hasJob = true;
+              }
+              else{
+                 hasJob = false;
+              }
+            case 'eye':
+              if(person.eyeColor === traitDetails[i]){
+                 hasEye = true;
+              }
+               else{
+                 hasEye = false;
+              }
+          }
+          if(hasGender && hasHeight && hasWeight && hasJob && hasEye){
+            peopleSearched.push(person);
+          }
+      } 
+      return peopleSearched; 
+    })
+    peopleFound = peopleSearched;
+    return peopleFound 
   }
-  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
-}
-
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 

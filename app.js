@@ -78,56 +78,67 @@ function app(people){
           break;
       }
     }
+    
     let peopleSearched = [];
-
     let peopleFound = people.filter(function(person){
+      let hasGender = true;
+      let hasHeight = true;
+      let hasWeight = true;
+      let hasJob = true;
+      let hasEye = true;
       for(let i = 0; i < choosenTraits.length; i++){
-        let hasGender = true;
-        let hasHeight = true;
-        let hasWeight = true;
-        let hasJob = true;
-        let hasEye = true;
+        
           switch(choosenTraits[i]){
             case 'gender':
               if(person.gender === traitDetails[i]){
                  hasGender = true;
+                 continue;
               }
               else{
                  hasGender = false;
+                 break;
               }
             case 'height':
               if(person.height === traitDetails[i]){
                  hasHeight = true;
+                 continue;
               }
               else{
                  hasHeight = false;
+                 break;
               }
             case 'weight':
               if(person.weight === traitDetails[i]){
                  hasWeight = true;
+                 continue;
               }
               else{
                  hasWeight = false;
+                 break;
               }
             case 'occupation':
               if(person.occupation === traitDetails[i]){
                  hasJob = true;
+                 continue;
               }
               else{
                  hasJob = false;
+                 break;
               }
             case 'eye':
               if(person.eyeColor === traitDetails[i]){
                  hasEye = true;
+                 continue;
               }
                else{
                  hasEye = false;
+                 break;
               }
           }
-          if(hasGender && hasHeight && hasWeight && hasJob && hasEye){
-            peopleSearched.push(person);
-          }
       } 
+      if(hasGender && hasHeight && hasWeight && hasJob && hasEye){
+        peopleSearched.unshift(person);
+      }
       return peopleSearched; 
     })
     peopleFound = peopleSearched;

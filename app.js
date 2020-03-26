@@ -13,12 +13,39 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
+      let traits = getTraits();
+      searchResults = searchByTraits(traits,people);
       break;
       default:
     app(people); // restart app
       break;
   }
-  
+  function getTraits(){
+    let traits = [];
+    let done = false;
+    while(!done){
+      let trait = promptFor("What is the trait to search? type 'done' to exit", chars).toLowerCase();
+      if(trait !== "done"){
+        traits.push(trait);
+      }
+      else{
+        break;
+      }
+    }
+    return traits;
+  }
+  function searchByTraits(traits,people){
+    let gender;
+    let height;
+    let weight;
+    let occupation;
+    let eye;
+    for(let i = 0; i < traits.length; i++){
+
+
+    }
+
+  }
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }

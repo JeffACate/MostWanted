@@ -38,12 +38,15 @@ function app(people){
     }
     return traits;
   }
+
   function searchByTraits(traits,people){
+
     let gender;
     let height;
     let weight;
     let occupation;
     let eye;
+
     let choosenTraits = [];
     let traitDetails = [];
     for(let i = 0; i < traits.length; i++){
@@ -198,12 +201,26 @@ function displayPeople(people){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
+function display3People(){
+  let people = { first :  data[8], second : data[9], third :  data[10]};
+  displayPeople(people);
+}
+
 
 function displayPerson(person){
   // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
+  // height, weight, age, name, occupation, eye color, gender, 
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Date of birth: " + person.dob + "\n";
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
+  personInfo += "Parents: " + person.parents + "\n";
+  personInfo += "Current Spouse: " + person.currentSpouse;
+
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }

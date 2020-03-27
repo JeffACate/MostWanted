@@ -201,28 +201,34 @@ function searchByName(people){
 }
 
 function findDescendants(person, people, descendants = null, descendantsList = null){
+  let parent;
   if (descendantsList === null){
     var descendantsList = [];
   }
   if(descendants === null){
     descendants = people.filter(function(el){
       for(let i = 0; i < el.parents.length; i ++){
-        if(el.parents[i] === person.id){
-          return true;
+        if(el.parents[i] !== undefined){
+          parent = getNameById(el.parents[i], people);
+        }
+        else{
+          continue;
+        }
+          if(person.id === parent[0].id){
+            person = parent[0];
+            if(el.parents[i] === person.id){
+              return true;
+            }
         }
       }
     })
-  }else{
-    /*
-      so same thing but differently
-     */ 
   }
   //Descendants populated at this point
   descendantsList.push(descendants);
 
   // add to dependantsList by recursively calling find dependants
 
-    for( let i = 0; i < descendants.length; i++ ){
+    for( let i = 0; i < descendantsList.length; i++ ){
       if (descendants.length > 0){
         descendantsList.push(findDescendants(descendants[i],descendants,null, descendantsList));
       }

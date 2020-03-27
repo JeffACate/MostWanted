@@ -215,6 +215,16 @@ function displayFamily(person, people){
       mother = parents[i][0];
     }
   }
+  let siblings = [];
+  for(let i = 0; i < people.length; i++){
+    if(person.parents === people[i].parents && person.firstName !== people[i].firstName){
+      siblings.unshift(person);
+      break;
+    }
+    else{
+      continue;
+    }
+  }
   let familyInfo = "";
   if(father !== undefined){
     familyInfo += "Father " + father.firstName + " " + father.lastName + "\n";
@@ -222,6 +232,11 @@ function displayFamily(person, people){
   if(mother !== undefined){
     familyInfo += "Mother: " + mother.firstName + " " + mother.lastName + "\n";
   }
+  familyInfo += "Siblings: ";
+  for(let i = 0; i < siblings.length; i++){
+    familyInfo += siblings[i].firstName + siblings[i].lastName + "\n";
+  }
+   
   //familyInfo += "Spouse: " + person.currentSpouse.firstName + person.currentSpouse.lastName + "\n";
   alert(familyInfo);
 }

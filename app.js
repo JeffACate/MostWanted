@@ -200,8 +200,10 @@ function searchByName(people){
   return foundPerson;
 }
 
-function findDescendants(person, people, descendants = null){
-
+function findDescendants(person, people, descendants = null, descendantsList = null){
+  if (descendantsList === null){
+    var descendantsList = [];
+  }
   if(descendants === null){
     descendants = people.filter(function(el){
       for(let i = 0; i < el.parents.length; i ++){
@@ -211,20 +213,31 @@ function findDescendants(person, people, descendants = null){
       }
     })
   }else{
-    // descendants.push(descendants.filter(function(el){
-    //   for(let i = 0; i < el.parents.length; i ++){
-
-    //     // if(el.parents[i] === person.id){
-    //     //   return true;
-    //     // }
-    //   }
-    // }))
+    /*
+      so same thing but differently
+     */ 
   }
-  // somehow have to determine weather these decendants have descendants
+  //Descendants populated at this point
+  descendantsList.push(descendants);
 
-  findDescendants(person, people, descendants)
-  
-  displayPeople(descendants);
+  // add to dependantsList by recursively calling find dependants
+
+    for( let i = 0; i < descendants.length; i++ ){
+      if (descendants.length > 0){
+        descendantsList.push(findDescendants(descendants[i],descendants,null, descendantsList));
+      }
+    }
+
+
+  // somehow have to determine weather these decendants have descendants
+  let descendantsToDisplay = [];
+  for(let i = 0; i < descendantsList.length; i++){
+    for(let j = 0; j < descendantsList[i].length; j++){
+      // if( descendantsList[i][j] !== null)??
+      descendantsToDisplay.push(descendantsList[i][j]);
+    }
+  }
+  displayPeople(descendantsToDisplay);
 }
 function displayFamily(person, people){
   let parents = [];

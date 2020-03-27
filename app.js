@@ -224,21 +224,27 @@ function searchByName(people){
 }
 
 function findDescendants(person, people, descendants = null, descendantsList = null){
+  let parent;
   if (descendantsList === null){
     var descendantsList = [];
   }
   if(descendants === null){
     descendants = people.filter(function(el){
       for(let i = 0; i < el.parents.length; i ++){
-        if(el.parents[i] === person.id){
-          return true;
+        if(el.parents[i] !== undefined){
+          parent = getNameById(el.parents[i], people);
+        }
+        else{
+          continue;
+        }
+          if(person.id === parent[0].id){
+            person = parent[0];
+            if(el.parents[i] === person.id){
+              return true;
+            }
         }
       }
     })
-  }else{
-    /*
-      so same thing but differently
-     */ 
   }
   //Descendants populated at this point
   if(descendants !== null){

@@ -145,7 +145,7 @@ function app(people){
       return peopleSearched; 
     })
     peopleFound = peopleSearched;
-    return peopleFound 
+    return peopleFound;
   }
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -172,7 +172,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
-    findDescendants(foundPerson[0], people);
+    displayPeople(findDescendants(foundPerson[0], people));
     break;
     case "restart":
     app(people); // restart
@@ -224,26 +224,38 @@ function findDescendants(person, people, descendants = null, descendantsList = n
     })
   }
   //Descendants populated at this point
-  descendantsList.push(descendants);
+  if(descendants !== null){
+    descendantsList.push(descendants);
+  }
 
   // add to dependantsList by recursively calling find dependants
-
-    for( let i = 0; i < descendantsList.length; i++ ){
+  let descendantsToDisplay = [];
+    for( let i = 0; i < descendants.length; i++ ){ // when we get here the second time descendants[i] regina has no descendants so it skipsto display thats why the first list works.
       if (descendants.length > 0){
-        descendantsList.push(findDescendants(descendants[i],descendants,null, descendantsList));
+        let moreDescendants = findDescendants(descendants[i],people,null, descendantsList);
+        if(moreDescendants !== undefined && moreDescendants !== null && moreDescendants.length!== 0)
+        descendantsList.push(moreDescendants);
       }
     }
 
 
   // somehow have to determine weather these decendants have descendants
-  let descendantsToDisplay = [];
+  
   for(let i = 0; i < descendantsList.length; i++){
-    for(let j = 0; j < descendantsList[i].length; j++){
-      // if( descendantsList[i][j] !== null)??
-      descendantsToDisplay.push(descendantsList[i][j]);
+    if(descendantsList[i].length !== 0){
+      for(let j = 0; j < descendantsList[i].length; j++){
+       if( descendantsList[i][j] !== null){
+         if(descendantsToDisplay.includes(descendantsList[i][j]))
+         {
+           break;
+         }
+         descendantsToDisplay.push(descendantsList[i][j]);
+       }
+        
+      }
     }
   }
-  displayPeople(descendantsToDisplay);
+  return (descendantsToDisplay);
 }
 function displayFamily(person, people){
   let parents = [];

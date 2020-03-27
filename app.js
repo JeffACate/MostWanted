@@ -168,6 +168,7 @@ function mainMenu(person, people){
     break;
     case "family":
     // TODO: get person's family
+    displayFamily(foundPerson[0], people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -198,6 +199,49 @@ function searchByName(people){
   return foundPerson;
 }
 
+function displayFamily(person, people){
+  let parents = [];
+  for(let i = 0; i < person.parents.length; i++){
+    let parent = getNameById(person.parents[i], people)
+    parents.push(parent);
+  }
+  let father;
+  let mother;
+  for(let i = 0; i < parents.length; i++){
+    if(parents[i][0].gender === 'male'){
+      father = parents[i][0];
+    }
+    else{
+      mother = parents[i][0];
+    }
+  }
+  let familyInfo = "";
+  if(father !== undefined){
+    familyInfo += "Father " + father.firstName + " " + father.lastName + "\n";
+  }
+  if(mother !== undefined){
+    familyInfo += "Mother: " + mother.firstName + " " + mother.lastName + "\n";
+  }
+  //familyInfo += "Spouse: " + person.currentSpouse.firstName + person.currentSpouse.lastName + "\n";
+  alert(familyInfo);
+}
+
+function getNameById(id, people){
+  let searchedPeople = [];
+  let foundPerson = people.filter(function(person){
+    for(let i = 0; i < people.length; i++){
+      if(person.id === id){
+        searchedPeople.unshift(person)
+        break;
+      }
+      else{
+        continue;
+      }
+    }
+  })
+  foundPerson = searchedPeople;
+  return foundPerson;
+}
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){

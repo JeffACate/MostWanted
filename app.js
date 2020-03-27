@@ -219,43 +219,43 @@ function displayFamily(person, people){
     parents.push(parent); 
   }
   
+ 
+  let siblings = [];
+  for(let i = 0; i < people.length; i++){
+    for(let j = 0; j < parents.length; j++){
+      if(person.firstName !== people[i].firstName && person.lastName === people[i].lastName){
+        if(person.parents[j] === people[i].parents[j]){
+          let sibling = people[i];
+          siblings.unshift(sibling);
+          break;
+        }
+        else{
+          continue;
+        }
+      } 
+    }  
+  }
   let spouse = getNameById(person.currentSpouse, people);
-
   let familyInfo = "";
   for(let i = 0; i < parents.length; i ++){
     if(parents[i][0] !== undefined && parents[i][0].gender === 'male'){
-      familyInfo += "Father " + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
+      familyInfo += "Father \n" + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
     }
     if(parents[i][0] !== undefined && parents[i][0].gender === 'female'){
-      familyInfo += "Mother: " + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
+      familyInfo += "Mother: \n" + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
     }
   }
-<<<<<<< HEAD
-  let siblings = [];
-  for(let i = 0; i < people.length; i++){
-    if(person.parents === people[i].parents && person.firstName !== people[i].firstName){
-      siblings.unshift(person);
-      break;
-    }
-    else{
-      continue;
-    }
-  }
-  let familyInfo = "";
-  if(father !== undefined){
-    familyInfo += "Father " + father.firstName + " " + father.lastName + "\n";
-  }
-  if(mother !== undefined){
-    familyInfo += "Mother: " + mother.firstName + " " + mother.lastName + "\n";
-  }
-  familyInfo += "Siblings: ";
+  familyInfo += "Siblings: \n";
   for(let i = 0; i < siblings.length; i++){
-    familyInfo += siblings[i].firstName + siblings[i].lastName + "\n";
+    familyInfo += siblings[i].firstName + " " + siblings[i].lastName + "\n";
   }
-   
-=======
-  familyInfo += "Spouse: " + spouse[0].firstName + " " + spouse[0].lastName + "\n";
->>>>>>> b63419de0a42e03992aaa4ee54c91456b7650fb2
+  if(spouse.length !== 0){
+    familyInfo += "Spouse: \n" + spouse[0].firstName + " " + spouse[0].lastName + "\n";
+  }
+  else{
+    familyInfo += "Spouse: \nNone";
+  }
+  
   //familyInfo += "Spouse: " + person.currentSpouse.firstName + person.currentSpouse.lastName + "\n";
   alert(familyInfo);
 }

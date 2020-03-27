@@ -218,16 +218,9 @@ function displayFamily(person, people){
     let parent = getNameById(person.parents[i], people)
     parents.push(parent); 
   }
-  // let father;
-  // let mother;
-  // for(let i = 0; i < parents.length; i++){
-  //   if(parents[i][0].gender === 'male'){
-  //     father = parents[i][0];
-  //   }
-  //   else{
-  //     mother = parents[i][0];
-  //   }
-  // }
+  
+  let spouse = getNameById(person.currentSpouse, people);
+
   let familyInfo = "";
   for(let i = 0; i < parents.length; i ++){
     if(parents[i][0] !== undefined && parents[i][0].gender === 'male'){
@@ -237,6 +230,7 @@ function displayFamily(person, people){
       familyInfo += "Mother: " + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
     }
   }
+  familyInfo += "Spouse: " + spouse[0].firstName + " " + spouse[0].lastName + "\n";
   //familyInfo += "Spouse: " + person.currentSpouse.firstName + person.currentSpouse.lastName + "\n";
   alert(familyInfo);
 }
@@ -257,6 +251,7 @@ function getNameById(id, people){
   foundPerson = searchedPeople;
   return foundPerson;
 }
+
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){

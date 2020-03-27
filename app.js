@@ -172,7 +172,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
-    findDescendants(person, people);
+    findDescendants(foundPerson[0], people);
     break;
     case "restart":
     app(people); // restart
@@ -216,24 +216,26 @@ function displayFamily(person, people){
   let parents = [];
   for(let i = 0; i < person.parents.length; i++){
     let parent = getNameById(person.parents[i], people)
-    parents.push(parent);
+    parents.push(parent); 
   }
-  let father;
-  let mother;
-  for(let i = 0; i < parents.length; i++){
-    if(parents[i][0].gender === 'male'){
-      father = parents[i][0];
-    }
-    else{
-      mother = parents[i][0];
-    }
-  }
+  // let father;
+  // let mother;
+  // for(let i = 0; i < parents.length; i++){
+  //   if(parents[i][0].gender === 'male'){
+  //     father = parents[i][0];
+  //   }
+  //   else{
+  //     mother = parents[i][0];
+  //   }
+  // }
   let familyInfo = "";
-  if(father !== undefined){
-    familyInfo += "Father " + father.firstName + " " + father.lastName + "\n";
-  }
-  if(mother !== undefined){
-    familyInfo += "Mother: " + mother.firstName + " " + mother.lastName + "\n";
+  for(let i = 0; i < parents.length; i ++){
+    if(parents[i][0] !== undefined && parents[i][0].gender === 'male'){
+      familyInfo += "Father " + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
+    }
+    if(parents[i][0] !== undefined && parents[i][0].gender === 'female'){
+      familyInfo += "Mother: " + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
+    }
   }
   //familyInfo += "Spouse: " + person.currentSpouse.firstName + person.currentSpouse.lastName + "\n";
   alert(familyInfo);

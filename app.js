@@ -171,6 +171,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
+    findDescendants(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -198,15 +199,24 @@ function searchByName(people){
   return foundPerson;
 }
 
+function findDescendants(person, people, descendants = null){
+  if(descendants === null){
+    descendants = people.filter(function(descendant){
+      if(descendant.parents[0] === person.id || descendant.parents[1] === person.id){
+        return true;
+      }else{
+        return false;
+      }
+    })
+  }
+  displayPeople(descendants);
+}
+
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
-}
-function display3People(){
-  let people = { first :  data[8], second : data[9], third :  data[10]};
-  displayPeople(people);
 }
 
 

@@ -30,7 +30,30 @@ function app(people){
     while(!done){
       let trait = promptFor("What is the trait to search? type 'done' to exit", chars).toLowerCase();
       if(trait !== "done"){
-        traits.push(trait);
+        if(!traits.includes(trait)){
+          switch(trait){
+            case 'gender':
+              traits.push(trait);
+              break;
+            case 'height':
+              traits.push(trait);
+              break;
+            case 'weight':
+              traits.push(trait);
+              break;
+            case 'occupation':
+              traits.push(trait);
+              break;
+            case 'eye color':
+              traits.push(trait);
+              break;
+            default:
+              alert(trait + " is not a valid trait.");
+              break;
+          }
+        }else{
+          alert(trait + " already added to list of traits.")
+        }
       }
       else{
         break;

@@ -172,6 +172,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
+    findDescendants(foundPerson[0], people);
     break;
     case "restart":
     app(people); // restart
@@ -199,22 +200,37 @@ function searchByName(people){
   return foundPerson;
 }
 
+function findDescendants(person, people, descendants = null){
+  if(descendants === null){
+    descendants = people.filter(function(descendant){
+      if(descendant.parents[0] === person.id || descendant.parents[1] === person.id){
+        return true;
+      }else{
+        return false;
+      }
+    })
+  }
+  displayPeople(descendants);
+}
 function displayFamily(person, people){
   let parents = [];
   for(let i = 0; i < person.parents.length; i++){
     let parent = getNameById(person.parents[i], people)
-    parents.push(parent);
+    parents.push(parent); 
   }
-  let father;
-  let mother;
-  for(let i = 0; i < parents.length; i++){
-    if(parents[i][0].gender === 'male'){
-      father = parents[i][0];
+  
+  let spouse = getNameById(person.currentSpouse, people);
+
+  let familyInfo = "";
+  for(let i = 0; i < parents.length; i ++){
+    if(parents[i][0] !== undefined && parents[i][0].gender === 'male'){
+      familyInfo += "Father " + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
     }
-    else{
-      mother = parents[i][0];
+    if(parents[i][0] !== undefined && parents[i][0].gender === 'female'){
+      familyInfo += "Mother: " + parents[i][0].firstName + " " + parents[i][0].lastName + "\n";
     }
   }
+<<<<<<< HEAD
   let siblings = [];
   for(let i = 0; i < people.length; i++){
     if(person.parents === people[i].parents && person.firstName !== people[i].firstName){
@@ -237,6 +253,9 @@ function displayFamily(person, people){
     familyInfo += siblings[i].firstName + siblings[i].lastName + "\n";
   }
    
+=======
+  familyInfo += "Spouse: " + spouse[0].firstName + " " + spouse[0].lastName + "\n";
+>>>>>>> b63419de0a42e03992aaa4ee54c91456b7650fb2
   //familyInfo += "Spouse: " + person.currentSpouse.firstName + person.currentSpouse.lastName + "\n";
   alert(familyInfo);
 }
@@ -257,15 +276,12 @@ function getNameById(id, people){
   foundPerson = searchedPeople;
   return foundPerson;
 }
+
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
-}
-function display3People(){
-  let people = { first :  data[8], second : data[9], third :  data[10]};
-  displayPeople(people);
 }
 
 

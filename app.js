@@ -201,23 +201,29 @@ function searchByName(people){
 }
 
 function findDescendants(person, people, descendants = null){
-  let parentsId = []; //number of parents = parentsId.length   && id's of parents = parentsId.[0] parentsId[1]
-  for(let i = 0; i < person.parents.length; i++){
-    parentsId.push(person.parents[i].id); 
-  }
 
-  
   if(descendants === null){
-      descendants = people.filter(function(el){
-        if(person.id === el.parents[0].id || el.parents[1].id){
+    descendants = people.filter(function(el){
+      for(let i = 0; i < el.parents.length; i ++){
+        if(el.parents[i] === person.id){
           return true;
-        }else{
-          return false;
         }
-      })
-      // if(parentsId[i] === person.parent[i].id){
-      //   descendants.push(getNameById(parentsId[i],people));
-    }
+      }
+    })
+  }else{
+    // descendants.push(descendants.filter(function(el){
+    //   for(let i = 0; i < el.parents.length; i ++){
+
+    //     // if(el.parents[i] === person.id){
+    //     //   return true;
+    //     // }
+    //   }
+    // }))
+  }
+  // somehow have to determine weather these decendants have descendants
+
+  findDescendants(person, people, descendants)
+  
   displayPeople(descendants);
 }
 function displayFamily(person, people){

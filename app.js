@@ -62,16 +62,13 @@ function app(people){
     return traits;
   }
 
-  function searchByTraits(traits,people){
-
+  function getTraitDetails(traits, choosenTraits, traitDetails){
     let gender;
     let height;
     let weight;
     let occupation;
     let eye;
 
-    let choosenTraits = [];
-    let traitDetails = [];
     for(let i = 0; i < traits.length; i++){
       switch(traits[i]){
         case 'gender':
@@ -104,7 +101,9 @@ function app(people){
           break;
       }
     }
-    
+  }
+
+  function checkTraits(choosenTraits, traitDetails, people){
     let peopleSearched = [];
     let peopleFound = people.filter(function(person){
       let hasGender = true;
@@ -168,6 +167,14 @@ function app(people){
       return peopleSearched; 
     })
     peopleFound = peopleSearched;
+    return peopleFound;
+  }
+
+  function searchByTraits(traits,people){
+    let choosenTraits = [];
+    let traitDetails = [];
+    getTraitDetails(traits, choosenTraits, traitDetails);
+    let peopleFound = checkTraits(choosenTraits, traitDetails, people);
     return peopleFound;
   }
 // Menu function to call once you find who you are looking for

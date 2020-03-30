@@ -287,15 +287,15 @@ function findDescendants(person, people, descendants = null, descendantsList = n
   }
   return (descendantsToDisplay);
 }
-function displayFamily(person, people){
-  let parents = [];
+
+function findParents(person, people, parents){
   for(let i = 0; i < person.parents.length; i++){
     let parent = getNameById(person.parents[i], people)
     parents.push(parent); 
   }
-  
- 
-  let siblings = [];
+}
+
+function findSiblings(person, people, siblings){
   for(let i = 0; i < people.length; i++){
     for(let j = 0; j < parents.length; j++){
       if(person.firstName !== people[i].firstName && person.lastName === people[i].lastName){
@@ -310,6 +310,12 @@ function displayFamily(person, people){
       } 
     }  
   }
+}
+function displayFamily(person, people){
+  let parents = [];
+  findParents(person, people, parents);
+  let siblings = [];
+  findSiblings(person, people, siblings);
   let spouse = getNameById(person.currentSpouse, people);
   let familyInfo = "";
   for(let i = 0; i < parents.length; i ++){

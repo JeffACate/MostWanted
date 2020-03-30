@@ -77,7 +77,7 @@ function app(people){
           traitDetails.push(eye);
           break;
         default:
-          prompt("Not a valid trait");
+          alert("Not a valid trait");
           break;
       }
     }
